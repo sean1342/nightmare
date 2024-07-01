@@ -16,6 +16,28 @@ struct GameState
 end
 
 
+# NEED TO CHECK THIS function
+
+# AND NEED TO IMPLEMENT INSTEAD OF SHITTY INDIVIDUAL IMPLEMENTATIONS
+
+function paths_through_permutations(permutations)
+    paths = []
+
+    routes = collect(permutations(1:Int(sqrt(length(permutations)))))
+
+    for route in routes
+        path = []
+
+        for i in 1:length(route)
+            push!(route, permutations[i,route[i]])
+        end
+
+        push!(paths, path)
+    end
+
+    paths
+end
+
 
 function are_games_iso(g1::GameState, g2::GameState)
     if (g1.num_dots!=g2.num_dots) || (length(g1.lines)!=length(g2.lines)) || (length(g1.faces)!=length(g2.faces))
@@ -23,7 +45,7 @@ function are_games_iso(g1::GameState, g2::GameState)
     end
 
     # TODO check for isomorphism in lines set
-    all_associations = collect(Iterators.product(g1.lines, g2.lines))
+    all_associations = collect(Iterators.product(1:g1.num_dots, 1:g2.num))
 
     perms = []
     paths = collect(permutations(1:Int(sqrt(length(all_associations)))))
@@ -42,3 +64,5 @@ function are_games_iso(g1::GameState, g2::GameState)
 
     # and in faces set
 end
+
+println(collect(Iterators.product(1:4, 1:4)))
