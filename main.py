@@ -1,6 +1,6 @@
 import itertools
 import numpy
-from genmoves import generate_moves, find_paths
+from genmoves import generate_moves, find_paths, find_group
 
 class GameState:
     def __init__(self, num_dots, line_end_dot_pairs, face_border_line_dot_pairs, faces_dots) -> None:
@@ -92,4 +92,4 @@ g1 = GameState(5, [(1,2), (1,3), (3,0), (0,1), (1,4)], [[(1,0), (0,3), (3,1)]], 
 g2 = GameState(5, [(1,4), (4,3), (3,2), (2,4), (4,0)], [[(4,3), (3,2), (2,4)]], [[0]])
 #print(are_games_iso(g1, g2))
 
-print(find_paths(1, 4, g2.lines, [1]))
+print(find_group(0, range(0,g1.num_dots), g1.lines))
