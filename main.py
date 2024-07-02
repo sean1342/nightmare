@@ -63,7 +63,6 @@ def are_faces_iso(g1, g2, good_associations):
                 if association[dot-1][1] == g2.faces_dotss[i][j]:
                     good = True
         if good:
-            print(association)
             better_associations.append(association)
             works = True
     
@@ -77,14 +76,14 @@ def are_games_iso(g1, g2):
         return False
 
     good_associations, lines_iso = are_lines_iso(g1, g2)
-
     if not lines_iso:
         return False
 
     better_associations, faces_iso = are_faces_iso(g1, g2, good_associations)
-    
     if not faces_iso:
         return False
+    
+    print(better_associations)
     
     return True
 
