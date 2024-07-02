@@ -1,6 +1,6 @@
 import itertools
 import numpy
-from genmoves import generate_moves, find_paths, find_group, find_isolated_groups
+from genmoves import generate_moves, find_paths, find_group, find_isolated_groups, remove_array_dupes
 
 class GameState:
     def __init__(self, num_dots, line_end_dot_pairs, face_border_line_dot_pairs, faces_dots) -> None:
@@ -94,5 +94,9 @@ g2 = GameState(5, [(1,4), (4,3), (3,2), (2,4), (4,0)], [[(4,3), (3,2), (2,4)]], 
 
 g = GameState(5, [(0,4), (1,3), (1,2), (3,2)], [[((1,2), (1,3), (3,2))]], [[]])
 
-#print(find_paths(0, 4, g.lines, []))
-print(find_isolated_groups(g1))
+
+#print(find_paths(0, 2, g.lines, []))
+print(find_isolated_groups(g))
+#print(find_group(1, range(0,g.num_dots), g.lines))
+
+#print(remove_array_dupes([[1,2,3], [2,3,1], [2,3], [3,2]]))
