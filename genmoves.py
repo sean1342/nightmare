@@ -2,7 +2,6 @@ import itertools
 
 def find_paths(d1, d2, lines, path):
     if d1 == d2:
-        path.append(d2)
         return path, True
     else:
         for line in lines:
