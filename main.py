@@ -1,5 +1,6 @@
 import itertools
 import numpy
+from genmoves import generate_moves
 
 class GameState:
     def __init__(self, num_dots, line_end_dot_pairs, face_border_line_dot_pairs, faces_dots) -> None:
@@ -12,7 +13,7 @@ def are_lines_iso(g1, g2):
     good = False
     good_associations = []
 
-    unshaped_associations = numpy.array(list(itertools.product(list(range(1,g1.num_dots+1)), list(range(1,g1.num_dots+1)))))
+    unshaped_associations = numpy.array(list(itertools.product(list(range(0,g1.num_dots)), list(range(0,g1.num_dots)))))
     unshaped_associations = list(unshaped_associations.reshape(g1.num_dots,g1.num_dots,2))
 
     routes = list(itertools.permutations(list(range(0, len(unshaped_associations[0])))))
@@ -87,7 +88,7 @@ def are_games_iso(g1, g2):
     
     return True
 
-g1 = GameState(6, [(1,5), (1,2), (3,4), (4,5), (1,3), (5,6), (2,3)], [((1,2), (2,3), (3,1)), ((1,5), (5,4), (3,2), (1,2), (3,4)), ((1,5), (5,4), (4,3), (3,1))], [[], [], [2]])
+g1 = GameState(6, [(0,4), (0,1), (2,3), (3,4), (0,2), (4,5), (1,2)], [((0,1), (1,2), (2,0)), ((0,4), (4,3), (2,1), (0,1), (2,3)), ((0,4), (4,3), (3,2), (2,0))], [[], [], [1]])
 
-g2 = GameState(6, [(1,5), (5,6), (1,6), (1,2), (2,4), (4,5), (2,3)], [((1,5), (1,6), (6,5)), ((1,2), (2,4), (4,5), (5,6), (6,1)), ((1,2), (2,4), (4,5), (5,1))], [[], [], [6]])
+g2 = GameState(6, [(0,4), (4,5), (0,5), (0,1), (1,3), (3,4), (1,2)], [((0,4), (0,5), (5,4)), ((0,1), (1,3), (3,4), (4,5), (5,0)), ((0,1), (1,3), (3,4), (4,0))], [[], [], [5]])
 print(are_games_iso(g1, g2))
