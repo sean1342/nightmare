@@ -91,8 +91,11 @@ def are_games_iso(g1, g2):
 g1 = GameState(6, [(1,2), (1,3), (3,0), (0,1), (1,4)], [[(1,0), (0,3), (3,1)]], [[4, 5]])
 g2 = GameState(5, [(1,4), (4,3), (3,2), (2,4), (4,0)], [[(4,3), (3,2), (2,4)]], [[0]])
 #print(are_games_iso(g1, g2))
+#print(5 in itertools.chain.from_iterable(g1.faces_dotss))
 
 g = GameState(5, [(0,4), (1,3), (1,2), (3,2)], [[((1,2), (1,3), (3,2))]], [[]])
 
 
-print(gen_child_states(g1))
+#print(gen_child_states(g1))
+#print(find_paths(0, 1, g1.lines, []))
+print(find_isolated_groups(g1))
