@@ -49,19 +49,19 @@ def find_isolated_groups(g):
     groups = remove_array_dupes(groups)
     return groups
 
-def generate_moves(g):
+def gen_child_states(g):
     for i in range (0,g.num_dots):
         for j in range (0,g.num_dots):
             if i != j:
 
                 # this is if both dots are inside of faces
-                if i in itertools.chain.from_iterable(g.faces_dotss) and j in itertools.chain.from_iterable(g.faces_dotts):
-                    pass
+                if i in itertools.chain.from_iterable(g.faces_dotss) and j in itertools.chain.from_iterable(g.faces_dotss):
+                    print("both inside", i, j)
 
                 # if one is in and one isnt
-                elif i in itertoolsitertools.chain.from_iterable(g.faces_dotss) and (j in itertools.chain.from_iterable(g.faces_dotss)) == False:
-                    pass
+                elif i in itertools.chain.from_iterable(g.faces_dotss) and (j in itertools.chain.from_iterable(g.faces_dotss)) == False:
+                    print("one and one", i, j)
 
                 # if both are on outside
-                elif (i in itertools.chain.from_iterable(g.faces_dotss)) == False and (j in itertools.chain.from_iterable(g.faces_dotts)) == False:
-                    pass
+                elif (i in itertools.chain.from_iterable(g.faces_dotss)) == False and (j in itertools.chain.from_iterable(g.faces_dotss)) == False:
+                    print("both on border", i, j)
