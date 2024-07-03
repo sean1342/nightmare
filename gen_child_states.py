@@ -1,5 +1,23 @@
 import itertools
 
+def find_parent_dots(d, g):
+    group = []
+    for face_dots in g.faces_dotss:
+        if d in face_dots:
+            group.append(d)
+    if group == []:
+        return None
+    return group
+
+def find_child_dots(d, g):
+    child_dots = []
+    for i, face in enumerate(g.faces):
+        if d in itertools.chain.from_iterable(face) and g.faces_dotss[i] != []:
+            child_dots.extend(g.faces_dotss[i])
+    if child_dots == []:
+        return None
+    return child_dots
+
 def remove_array_dupes(arr):
     seen = set()
     unique_arr = []
@@ -39,14 +57,7 @@ def find_group(d, dots, lines):
 
 def find_isolated_groups(g):
     groups = []
-    for i in range(0, g.num_dots):
-        groups.append(find_group(i, range(0,g.num_dots), g.lines))
-        for j in range(0, g.num_dots):
-            if i != j:
-                if not find_paths(i, j, g.lines, []):
-                    groups.append(find_group(i, range(0, g.num_dots), g.lines))
-                    break
-    groups = remove_array_dupes(groups)
+    # LOCK THE FUCK IN THIS NEEDS TO BE DONE BY TN
     return groups
 
 def gen_child_states(g):
