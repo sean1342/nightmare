@@ -2,9 +2,9 @@ import itertools
 
 def find_parent_dots(d, g):
     group = []
-    for face_dots in g.faces_dotss:
+    for i, face_dots in enumerate(g.faces_dotss):
         if d in face_dots:
-            group.append(d)
+            group = (g.faces[i])
     if group == []:
         return None
     return group
@@ -47,17 +47,16 @@ def find_paths(d1, d2, lines, path):
 
     return False
 
-def find_group(d, dots, lines):
+def find_group(d, g):
     dots_in_group = [d]
-    for dot in dots:
+    for dot in range(0, g.num_dots):
         if d != dot:
-            if find_paths(d, dot, lines, []):
+            if find_paths(d, dot, g.lines, []):
                 dots_in_group.append(dot)
     return dots_in_group
 
 def find_isolated_groups(g):
     groups = []
-    # LOCK THE FUCK IN THIS NEEDS TO BE DONE BY TN
     return groups
 
 def gen_child_states(g):
