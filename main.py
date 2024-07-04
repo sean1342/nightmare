@@ -16,10 +16,10 @@ g2 = GameState(5, [(1,4), (4,3), (3,2), (2,4), (4,0)], [[(4,3), (3,2), (2,4)]], 
 
 g = GameState(5, [(0,4), (1,3), (1,2), (3,2)], [[(1,2), (1,3), (3,2)]], [[]])
 
-fucker = GameState(7, [(1,0), (6,2), (2,3), (3,5)], [[(1,0)], [(6,2)], [(3,5)]], [[6,2], [3,5], [4]])
+fucker = GameState(7, [(1,0), (6,2), (3,5)], [[(1,0)], [(6,2)], [(3,5)]], [[6,2], [3,5], [4]])
 
 #print(find_isolated_groups(fucker))
 
 #print(find_parent_dots(6, fucker))
 
-print(find_group(2, fucker))
+print(find_group(5, fucker), -1)

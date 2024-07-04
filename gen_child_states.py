@@ -4,7 +4,7 @@ def find_parent_dots(d, g):
     group = []
     for i, face_dots in enumerate(g.faces_dotss):
         if d in face_dots:
-            group = (g.faces[i])
+            group.extend(g.faces[i][0])
     if group == []:
         return None
     return group
@@ -47,14 +47,16 @@ def find_paths(d1, d2, lines, path):
 
     return False
 
-def find_group(d, g):
-    dots_in_group = [d]
-    for dot in range(0, g.num_dots):
-        if d != dot:
-            if find_paths(d, dot, g.lines, []):
-                dots_in_group.append(dot)
-    return dots_in_group
+# holy shit negative progress
 
+
+
+# need to do this function
+def find_group(d, g, dir = 0):
+    dots_in_group = [d]
+    return set(dots_in_group)
+
+# and this one by 1300 jul 4
 def find_isolated_groups(g):
     groups = []
     return groups
@@ -63,7 +65,6 @@ def gen_child_states(g):
     for i in range (0,g.num_dots):
         for j in range (0,g.num_dots):
             if i != j:
-
                 # this is if both dots are inside of faces
                 if i in itertools.chain.from_iterable(g.faces_dotss) and j in itertools.chain.from_iterable(g.faces_dotss):
                     print("both inside", i, j)
@@ -75,3 +76,5 @@ def gen_child_states(g):
                 # if both are on outside
                 elif (i in itertools.chain.from_iterable(g.faces_dotss)) == False and (j in itertools.chain.from_iterable(g.faces_dotss)) == False:
                     print("both on border", i, j)
+            if i == j:
+                pass
