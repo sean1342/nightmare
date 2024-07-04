@@ -1,3 +1,6 @@
+import itertools
+import numpy
+
 def are_lines_iso(g1, g2):
     good = False
     good_associations = []
