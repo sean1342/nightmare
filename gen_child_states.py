@@ -10,6 +10,14 @@ def find_parent_dots(d, g):
         return None
     return group
 
+def split_path_into_lines(path):
+    lines = []
+    for i in range(0, len(path)-1):
+        lines.append((path[i], path[i+1]))
+    if lines == []:
+        return None
+    return lines
+
 # this works, is chatgpt
 def find_all_paths(d1, d2, lines, path):
     if d1 == d2:
@@ -144,6 +152,8 @@ def find_isolated_groups(g):
     return groups
 
 def gen_child_states(g):
+    child_states = []
+
     both_inside = []
     both_outside = []
     one_and_one = []
@@ -174,8 +184,24 @@ def gen_child_states(g):
         new_gs_with_line = []
         groups = find_isolated_groups(g)
 
+        in_same_group = False
+
+        # this is for the two routes that dont contain anything
+        # and if they are in the same group
         for group in groups:
             if outside_pair[0] in group and outside_pair[1] in group:
+                print("pair", outside_pair)
+                in_same_group = True
+                new_lines = g.lines.copy()
+                new_lines.append((outside_pair[0], g.num_dots + 1))
+                new_lines.append((g.num_dots + 1, outside_pair[1]))
+                new_face_lines_one = g.faces.copy()
+                new_face_one = split_path_into_lines(find_all_paths_outside(outside_pair[0], outside_pair[1], g)[0])
+                new_face_one.append((outside_pair[0], g.num_dots + 1))
+                new_face_one.append((g.num_dots + 1, outside_pair[1]))
+                new_face_lines_one.append(new_face_one)
+                print(new_face_lines_one)
+                print()
                 # these are the two gs where the new route doesnt contain any other isolated groups
-                one_way =   GameState(g.num_dots + 1, new_lines, g.lines.copy().append(new_face_line_one), g.faces_dotss.copy().append([]))
-                other_way = GameState(g.num_dots + 1, new_lines, g.lines.copy().append(new_face_line_two), g.faces_dotss.copy().append([]))
+                #one_way =   GameState(g.num_dots + 1, new_lines, new_face_lines_one, g.faces_dotss.copy().append([]))
+                #other_way = GameState(g.num_dots + 1, new_lines, new_face_lines_two, g.faces_dotss.copy().append([]))
