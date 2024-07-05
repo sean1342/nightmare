@@ -177,8 +177,5 @@ def gen_child_states(g):
         for group in groups:
             if outside_pair[0] in group and outside_pair[1] in group:
                 # these are the two gs where the new route doesnt contain any other isolated groups
-                new_face_lines_one = find_all_paths_outside(outside_pair[0], outside_pair[1], g)[0]
-                new_face_lines_two = find_all_paths_outside(outside_pair[0], outside_pair[1], g)[1]
-                new_lines = g.lines.copy().append((outside_pair[0], outside_pair[1]))
-                one_way =   GameState(g.num_dots + 1, new_lines, g.lines.copy().append(new_face_lines_one), g.faces_dotss.copy().append([]))
-                other_way = GameState(g.num_dots + 1, new_lines, g.lines.copy().append(new_face_lines_two), g.faces_dotss.copy().append([]))
+                one_way =   GameState(g.num_dots + 1, new_lines, g.lines.copy().append(new_face_line_one), g.faces_dotss.copy().append([]))
+                other_way = GameState(g.num_dots + 1, new_lines, g.lines.copy().append(new_face_line_two), g.faces_dotss.copy().append([]))

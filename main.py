@@ -11,4 +11,4 @@ bad_game = GameState(7, [(1,0), (6,2), (3,5)], [[(1,0)], [(6,2)], [(3,5)]], [[6,
 
 worse_game = GameState(5, [(4,4), (1,0), (2,3)], [[(4,4)], [(1,0)], [(2,3)]], [[1, 2, 3, 0], [], []])
 
-print(find_isolated_groups(worse_game))
+gen_child_states(g1)
