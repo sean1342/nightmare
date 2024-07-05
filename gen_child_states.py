@@ -27,17 +27,24 @@ def find_all_paths(d1, d2, lines, path):
 
     return paths
 
+def is_on_outside(d, g):
+    if d not in itertools.chain.from_iterable(g.faces_dotss):
+        return True
+    else:
+        return False
 
-# LEFT OFF HERE. check chatgpt
-def find_two_paths_btwn_outside_dots(d1, d2, g):
-    paths = find_all_paths(d1, d2, g, [])
-    outside_path = paths
-
+def find_all_paths_outside(d1, d2, g):
+    paths = find_all_paths(d1, d2, g.lines, [])
+    good_paths = []
     for path in paths:
+        is_good = True
         for d in path:
-            if d in itertools.chain.from_iterable(g.faces_dotss):
-                # THIS IS AN ISSUE
-                paths.remove(path)
+            if not is_on_outside(d, g):
+                is_good = False
+        if is_good:
+            good_paths.append([d1] + path)
+    return good_paths
+
 
 def find_child_dots(d, g):
     child_dots = []
@@ -84,7 +91,6 @@ def find_parent_group(d, g):
         if is_path(d, d2, g.lines, []):
             dots_in_group.append(d2)
     if find_parent_dots(d, g) != None:
-        print("her")
         dots_in_group.extend(find_parent_group(find_parent_dots(d, g)[0], g))
     return set(dots_in_group)
 
@@ -100,10 +106,33 @@ def find_child_group(d, g):
                     dots_in_group.extend(find_child_group(find_child_dots(d2, g)[i], g))
     return set(dots_in_group)
 
-import copy
+def find_sibling_groups(d, g):
+    groups = []
+    # this top loop might be unnessesary
+    if find_parent_dots(d, g) != None:
+        for parent_dot in find_parent_dots(d, g):
+            for sibling_dot in find_child_dots(parent_dot, g):
+                if not is_path(d, sibling_dot, g.lines, []):
+                    sibling_group = []
+                    for i in range(0, g.num_dots):
+                        if is_path(sibling_dot, i, g.lines, []):
+                            sibling_group.append(i)
+                    groups.extend(set(sibling_group))
+    if groups == []:
+        return None
+    else:
+        return groups
 
 def find_group(d, g):
-    return(list(set(list(find_child_group(d, g)) + (list(find_parent_group(d, g))))))
+    group = []
+    if find_child_group(d, g) != None:
+        group.extend(list(find_child_group(d, g)))
+    if find_parent_group(d, g) != None:
+        group.extend(list(find_parent_group(d, g)))
+    if find_sibling_groups(d, g) != None:
+        group.extend(list(find_sibling_groups(d, g)))
+    
+    return list(set(group))
 
 def find_isolated_groups(g):
     groups = []
@@ -112,13 +141,6 @@ def find_isolated_groups(g):
     for d in range(0, g.num_dots):
         if d not in itertools.chain.from_iterable(groups):
             groups.append(find_group(d, g))
-
-    # i dont think i need this
-    #for d1 in range(0, g.num_dots):
-    #    for d2 in range(0, g.num_dots):
-    #        if d1 != d2:
-    #            if d2 not in find_group(d1, g) or d1 not in find_group(d2, g):
-    #                print(d1 in find_group(d2, g), d2 in find_group(d1, g))
     return groups
 
 def gen_child_states(g):
@@ -155,7 +177,8 @@ def gen_child_states(g):
         for group in groups:
             if outside_pair[0] in group and outside_pair[1] in group:
                 # these are the two gs where the new route doesnt contain any other isolated groups
-                new_face_lines_one = find_two_paths_btwn_outside_dots(outside_pair[0], outside_pair[1], g, [])[0]
-                new_face_lines_two = find_two_paths_btwn_outside_dots(outside_pair[0], outside_pair[1], g, [])[1]
-                one_way =   GameState(g.num_dots + 1, copy(g.lines).append((outside_pair[0], outside_pair[1])), copy(g.lines).append(new_face_lines_one), copy(g.faces_dotss).append([]))
-                other_way = GameState(g.num_dots + 1, copy(g.lines).append((outside_pair[0], outside_pair[1])), copy(g.lines).append(new_face_lines_one), copy(g.faces_dotss).append([]))
+                new_face_lines_one = find_all_paths_outside(outside_pair[0], outside_pair[1], g)[0]
+                new_face_lines_two = find_all_paths_outside(outside_pair[0], outside_pair[1], g)[1]
+                new_lines = g.lines.copy().append((outside_pair[0], outside_pair[1]))
+                one_way =   GameState(g.num_dots + 1, new_lines, g.lines.copy().append(new_face_lines_one), g.faces_dotss.copy().append([]))
+                other_way = GameState(g.num_dots + 1, new_lines, g.lines.copy().append(new_face_lines_two), g.faces_dotss.copy().append([]))

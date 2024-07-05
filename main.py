@@ -1,5 +1,3 @@
-import itertools
-import numpy
 from gamestate import GameState
 from gen_child_states import *
 from are_games_iso import *
@@ -11,4 +9,6 @@ g = GameState(5, [(0,4), (1,3), (1,2), (3,2)], [[(1,2), (1,3), (3,2)]], [[]])
 
 bad_game = GameState(7, [(1,0), (6,2), (3,5)], [[(1,0)], [(6,2)], [(3,5)]], [[6,2], [3,5], [4]])
 
-#print(gen_child_states(bad_game))
+worse_game = GameState(5, [(4,4), (1,0), (2,3)], [[(4,4)], [(1,0)], [(2,3)]], [[1, 2, 3, 0], [], []])
+
+print(find_isolated_groups(worse_game))
