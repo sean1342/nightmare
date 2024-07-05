@@ -181,40 +181,4 @@ def gen_child_states(g):
         pass
     
     for outside_pair in both_outside:
-        # IMPORTANT:: THERE IS STILL THE CASE CIRCLED IN NOTES PG OF N=2 charting
-        # ALSO THE CASE OF g1, routes of 1,2
-
-
-        new_gs_with_line = []
-        groups = find_isolated_groups(g)
-
-        in_same_group = False
-
-        # this is for the two routes that dont contain anything
-        # and if they are in the same group
-        for group in groups:
-            if outside_pair[0] in group and outside_pair[1] in group:
-                print("pair", outside_pair)
-                in_same_group = True
-                new_lines = g.lines.copy()
-                new_lines.append((outside_pair[0], g.num_dots))
-                new_lines.append((g.num_dots, outside_pair[1]))
-
-                new_face_one = split_path_into_lines(find_all_paths_outside(outside_pair[0], outside_pair[1], g)[0])
-                new_face_one.append((outside_pair[0], g.num_dots))
-                new_face_one.append((g.num_dots, outside_pair[1]))
-                new_face_lines_one = g.faces.copy()
-                new_face_lines_one.append(new_face_one)
-
-                new_face_two = split_path_into_lines(find_all_paths_outside(outside_pair[0], outside_pair[1], g)[1])
-                new_face_two.append((outside_pair[0], g.num_dots))
-                new_face_two.append((g.num_dots, outside_pair[1]))
-                new_face_lines_two = g.faces.copy()
-                new_face_lines_two.append(new_face_two)
-
-                print(new_face_lines_one)
-                print(new_face_lines_two)
-                print()
-                # these are the two gs where the new route doesnt contain any other isolated groups
-                #one_way =   GameState(g.num_dots + 1, new_lines, new_face_lines_one, g.faces_dotss.copy().append([]))
-                #other_way = GameState(g.num_dots + 1, new_lines, new_face_lines_two, g.faces_dotss.copy().append([]))
+        pass
